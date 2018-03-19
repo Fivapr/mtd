@@ -15,6 +15,23 @@ class App extends Component {
     };
   }
 
+  getTodosfromLS = () => {
+    if (localStorage.getItem("todos")) {
+      this.state.todos = JSON.parse(localStorage.getItem("todos"));
+      this.setState({
+        todos: this.state.todos
+      });
+    }
+  };
+
+  setTodosToLS = todos => {
+    localStorage.setItem("todos", JSON.stringify(this.state.todos));
+  };
+
+  componentDidMount() {
+    this.getTodosfromLS();
+  }
+
   swap = (arr, i, j) => {
     let temp = arr[i];
     arr[i] = arr[j];
@@ -26,6 +43,7 @@ class App extends Component {
     this.setState({
       todos: this.swap(this.state.todos, indexFrom, indexTo)
     });
+    this.setTodosToLS(this.state.todos);
   };
 
   addToDo = todo => {
@@ -33,6 +51,7 @@ class App extends Component {
     this.setState({
       todos: this.state.todos
     });
+    this.setTodosToLS(this.state.todos);
   };
 
   deleteToDo = index => {
@@ -40,6 +59,7 @@ class App extends Component {
     this.setState({
       todos: this.state.todos
     });
+    this.setTodosToLS(this.state.todos);
   };
 
   render() {

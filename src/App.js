@@ -36,16 +36,16 @@ class App extends Component {
     this.getTodosfromLS();
   }
 
-  swap = (arr, i, j) => {
-    let temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-    return arr;
+  swap = (arri, arrj, i, j) => {
+    let temp = arri[i];
+    arri[i] = arrj[j];
+    arrj[j] = temp;
   };
 
   handleDrag = (boardIndexFrom, indexFrom, boardIndexTo, indexTo) => {
-    this.state.boards[boardIndexFrom].todos = this.swap(
+    this.swap(
       this.state.boards[boardIndexFrom].todos,
+      this.state.boards[boardIndexTo].todos,
       indexFrom,
       indexTo
     );

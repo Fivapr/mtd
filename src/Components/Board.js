@@ -3,22 +3,28 @@ import DragContainer from "./DragContainer";
 import AddToDo from "./AddToDo";
 
 class Board extends Component {
-  addToDo = (boardIndex, todo) => {
-    this.props.addToDO(boardIndex, todo);
-  };
-
-  deleteToDo = (boardIndex, index) => {
-    this.props.deleteToDo(boardIndex, index);
-  };
-
-  handleDrag = (boardIndexFrom, indexFrom, boardIndexTo, indexTo) => {
-    this.props.handleDrag(boardIndexFrom, indexFrom, boardIndexTo, indexTo);
+  handleClick = boardIndex => {
+    this.props.deleteBoard(boardIndex);
   };
 
   render() {
     return (
       <div>
-        <h2>{this.props.name}</h2>
+        <div
+          style={{
+            width: 200,
+            display: "flex",
+            justifyContent: "space-between"
+          }}
+        >
+          <h2>{this.props.name}</h2>
+          <h2
+            style={{ cursor: "pointer" }}
+            onClick={() => this.handleClick(this.props.boardIndex)}
+          >
+            X
+          </h2>
+        </div>
         <AddToDo
           addToDo={this.props.addToDo}
           boardIndex={this.props.boardIndex}
@@ -32,6 +38,7 @@ class Board extends Component {
               key={index}
               handleDrag={this.props.handleDrag}
               deleteToDo={this.props.deleteToDo}
+              addBoard={this.props.addBoard}
             />
           );
         })}

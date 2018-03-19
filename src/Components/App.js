@@ -1,35 +1,28 @@
 import React, { Component } from "react";
-import "./App.css";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
-import DragContainer from "./DragContainer";
-import AddToDo from "./AddToDo";
+import AddBoard from "./AddBoard";
 import Board from "./Board";
 
-//"lala", "qwerty", "ququarequu"
-
+// { name: "qwe", todos: ["lala", "qwerty", "ququarequu"] },
+// { name: "rty", todos: ["lolalo", "asdfgh", "ququarequu"] }
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      boards: [
-        { name: "qwe", todos: ["lala", "qwerty", "ququarequu"] },
-        { name: "rty", todos: ["lolalo", "asdfgh", "ququarequu"] }
-      ]
+      boards: []
     };
   }
 
   getTodosfromLS = () => {
-    if (localStorage.getItem("todos")) {
-      this.state.todos = JSON.parse(localStorage.getItem("todos"));
-      this.setState({
-        todos: this.state.todos
-      });
+    if (localStorage.getItem("boards")) {
+      this.state.boards = JSON.parse(localStorage.getItem("boards"));
+      this.setState({ boards: this.state.boards });
     }
   };
 
-  setTodosToLS = todos => {
-    localStorage.setItem("todos", JSON.stringify(this.state.todos));
+  setTodosToLS = () => {
+    localStorage.setItem("boards", JSON.stringify(this.state.boards));
   };
 
   componentDidMount() {
@@ -49,29 +42,38 @@ class App extends Component {
       indexFrom,
       indexTo
     );
-
-    this.setState({
-      boards: this.state.boards
-    });
+    this.setState({ boards: this.state.boards });
+    this.setTodosToLS();
   };
 
   addToDo = (boardIndex, todo) => {
     this.state.boards[boardIndex].todos.push(todo);
-    this.setState({
-      boards: this.state.boards
-    });
+    this.setState({ boards: this.state.boards });
+    this.setTodosToLS();
   };
 
   deleteToDo = (boardIndex, index) => {
     this.state.boards[boardIndex].todos.splice(index, 1);
-    this.setState({
-      todos: this.state.todos
-    });
+    this.setState({});
+    this.setTodosToLS();
+  };
+
+  deleteBoard = boardIndex => {
+    this.state.boards.splice(boardIndex, 1);
+    this.setState({ boards: this.state.boards });
+    this.setTodosToLS();
+  };
+
+  addBoard = name => {
+    this.state.boards.push({ name: name, todos: [] });
+    this.setState({ boards: this.state.boards });
+    this.setTodosToLS();
   };
 
   render() {
     return (
       <div>
+        <AddBoard addBoard={this.addBoard} />
         {this.state.boards.map((board, index) => {
           return (
             <Board
@@ -82,6 +84,7 @@ class App extends Component {
               handleDrag={this.handleDrag}
               deleteToDo={this.deleteToDo}
               addToDo={this.addToDo}
+              deleteBoard={this.deleteBoard}
             />
           );
         })}

@@ -4,7 +4,7 @@ import { DragSource } from "react-dnd";
 
 const todoSource = {
   beginDrag(props) {
-    return { index: props.index };
+    return { boardIndex: props.boardIndex, index: props.index };
   }
 };
 

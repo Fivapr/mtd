@@ -16,7 +16,7 @@ class AddToDo extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.addToDo(this.state.value);
+    this.props.addToDo(this.props.boardIndex, this.state.value);
   };
 
   render() {

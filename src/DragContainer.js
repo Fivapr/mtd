@@ -5,7 +5,12 @@ import DragElement from "./DragElement";
 
 const divTarget = {
   drop(props, monitor) {
-    props.handleDrag(monitor.getItem().index, props.index);
+    props.handleDrag(
+      monitor.getItem().boardIndex,
+      monitor.getItem().index,
+      props.boardIndex,
+      props.index
+    );
   }
 };
 
@@ -16,12 +21,12 @@ function collect(connect) {
 }
 
 class DragContainer extends Component {
-  handleClick = index => {
-    this.props.deleteToDo(index);
+  handleClick = (boardIndex, index) => {
+    this.props.deleteToDo(boardIndex, index);
   };
 
   render() {
-    const { index, value, connectDropTarget } = this.props;
+    const { boardIndex, index, value, connectDropTarget } = this.props;
 
     return connectDropTarget(
       <div
@@ -33,10 +38,10 @@ class DragContainer extends Component {
           justifyContent: "space-between"
         }}
       >
-        <DragElement value={value} index={index} />
+        <DragElement value={value} index={index} boardIndex={boardIndex} />
         <span
           style={{ cursor: "pointer" }}
-          onClick={() => this.handleClick(index)}
+          onClick={() => this.handleClick(boardIndex, index)}
         >
           X
         </span>

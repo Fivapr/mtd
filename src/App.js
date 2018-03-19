@@ -4,6 +4,7 @@ import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import DragContainer from "./DragContainer";
 import AddToDo from "./AddToDo";
+import Board from "./Board";
 
 //"lala", "qwerty", "ququarequu"
 
@@ -11,7 +12,10 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      todos: []
+      boards: [
+        { name: "qwe", todos: ["lala", "qwerty", "ququarequu"] },
+        { name: "rty", todos: ["lolalo", "asdfgh", "ququarequu"] }
+      ]
     };
   }
 
@@ -39,41 +43,45 @@ class App extends Component {
     return arr;
   };
 
-  handleDrag = (indexTo, indexFrom) => {
+  handleDrag = (boardIndexFrom, indexFrom, boardIndexTo, indexTo) => {
+    this.state.boards[boardIndexFrom].todos = this.swap(
+      this.state.boards[boardIndexFrom].todos,
+      indexFrom,
+      indexTo
+    );
+
     this.setState({
-      todos: this.swap(this.state.todos, indexFrom, indexTo)
+      boards: this.state.boards
     });
-    this.setTodosToLS(this.state.todos);
   };
 
-  addToDo = todo => {
-    this.state.todos.push(todo);
+  addToDo = (boardIndex, todo) => {
+    this.state.boards[boardIndex].todos.push(todo);
+    this.setState({
+      boards: this.state.boards
+    });
+  };
+
+  deleteToDo = (boardIndex, index) => {
+    this.state.boards[boardIndex].todos.splice(index, 1);
     this.setState({
       todos: this.state.todos
     });
-    this.setTodosToLS(this.state.todos);
-  };
-
-  deleteToDo = index => {
-    this.state.todos.splice(index, 1);
-    this.setState({
-      todos: this.state.todos
-    });
-    this.setTodosToLS(this.state.todos);
   };
 
   render() {
     return (
       <div>
-        <AddToDo addToDo={this.addToDo} />
-        {this.state.todos.map((todo, index) => {
+        {this.state.boards.map((board, index) => {
           return (
-            <DragContainer
-              value={todo}
-              index={index}
+            <Board
+              boardIndex={index}
               key={index}
+              name={board.name}
+              todos={board.todos}
               handleDrag={this.handleDrag}
               deleteToDo={this.deleteToDo}
+              addToDo={this.addToDo}
             />
           );
         })}

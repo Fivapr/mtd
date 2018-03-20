@@ -16,8 +16,8 @@ function collect(connect) {
 
 class DragElement extends Component {
   render() {
-    const { value, connectDragSource } = this.props;
-    return connectDragSource(<div>{value} </div>);
+    const { todo, connectDragSource } = this.props;
+    return connectDragSource(<div>{todo} </div>);
   }
 }
 

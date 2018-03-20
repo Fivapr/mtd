@@ -14,19 +14,19 @@ class App extends Component {
     };
   }
 
-  getTodosfromLS = () => {
+  getDatafromLS = () => {
     if (localStorage.getItem("boards")) {
       this.state.boards = JSON.parse(localStorage.getItem("boards"));
-      this.setState({ boards: this.state.boards });
+      this.setState({});
     }
   };
 
-  setTodosToLS = () => {
+  setDataToLS = () => {
     localStorage.setItem("boards", JSON.stringify(this.state.boards));
   };
 
   componentDidMount() {
-    this.getTodosfromLS();
+    this.getDatafromLS();
   }
 
   swap = (arri, arrj, i, j) => {
@@ -42,32 +42,27 @@ class App extends Component {
       indexFrom,
       indexTo
     );
-    this.setState({ boards: this.state.boards });
-    this.setTodosToLS();
+    this.setState({}, () => this.setDataToLS());
   };
 
   addToDo = (boardIndex, todo) => {
     this.state.boards[boardIndex].todos.push(todo);
-    this.setState({ boards: this.state.boards });
-    this.setTodosToLS();
+    this.setState({}, () => this.setDataToLS());
   };
 
   deleteToDo = (boardIndex, index) => {
     this.state.boards[boardIndex].todos.splice(index, 1);
-    this.setState({});
-    this.setTodosToLS();
+    this.setState({}, () => this.setDataToLS());
   };
 
   deleteBoard = boardIndex => {
     this.state.boards.splice(boardIndex, 1);
-    this.setState({ boards: this.state.boards });
-    this.setTodosToLS();
+    this.setState({}, () => this.setDataToLS());
   };
 
   addBoard = name => {
     this.state.boards.push({ name: name, todos: [] });
-    this.setState({ boards: this.state.boards });
-    this.setTodosToLS();
+    this.setState({}, () => this.setDataToLS());
   };
 
   render() {

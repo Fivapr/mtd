@@ -2,6 +2,20 @@ import React, { Component } from "react";
 import { ItemTypes } from "./Constants";
 import { DropTarget } from "react-dnd";
 import DragElement from "./DragElement";
+import styled from "styled-components";
+
+const Container = styled.div`
+  background: red;
+  width: 400px;
+  height: 50px;
+  line-height: 50px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Delete = styled.span`
+  cursor: pointer;
+`;
 
 const divTarget = {
   drop(props, monitor) {
@@ -21,30 +35,21 @@ function collect(connect) {
 }
 
 class DragContainer extends Component {
-  handleClick = (boardIndex, index) => {
-    this.props.deleteToDo(boardIndex, index);
-  };
-
   render() {
-    const { boardIndex, index, value, connectDropTarget } = this.props;
+    const {
+      boardIndex,
+      index,
+      todo,
+      connectDropTarget,
+      deleteToDo
+    } = this.props;
 
     return connectDropTarget(
-      <div
-        style={{
-          backgroundColor: "red",
-          width: 400,
-          height: 50,
-          display: "flex",
-          justifyContent: "space-between"
-        }}
-      >
-        <DragElement value={value} index={index} boardIndex={boardIndex} />
-        <span
-          style={{ cursor: "pointer" }}
-          onClick={() => this.handleClick(boardIndex, index)}
-        >
-          X
-        </span>
+      <div>
+        <Container>
+          <DragElement todo={todo} index={index} boardIndex={boardIndex} />
+          <Delete onClick={() => deleteToDo(boardIndex, index)}>X</Delete>
+        </Container>
       </div>
     );
   }

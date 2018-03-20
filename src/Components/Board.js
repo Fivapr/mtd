@@ -1,44 +1,52 @@
 import React, { Component } from "react";
 import DragContainer from "./DragContainer";
 import AddToDo from "./AddToDo";
+import styled from "styled-components";
+
+const BoardHeader = styled.div`
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Delete = styled.h2`
+  cursor: pointer;
+`;
+
+const BoardName = styled.h2``;
 
 class Board extends Component {
-  handleClick = boardIndex => {
-    this.props.deleteBoard(boardIndex);
-  };
-
   render() {
+    const {
+      deleteBoard,
+      addToDo,
+      boardIndex,
+      handleDrag,
+      addBoard,
+      deleteToDo,
+      todos,
+      name
+    } = this.props;
+
     return (
       <div>
-        <div
-          style={{
-            width: 200,
-            display: "flex",
-            justifyContent: "space-between"
-          }}
-        >
-          <h2>{this.props.name}</h2>
-          <h2
-            style={{ cursor: "pointer" }}
-            onClick={() => this.handleClick(this.props.boardIndex)}
-          >
-            X
-          </h2>
-        </div>
-        <AddToDo
-          addToDo={this.props.addToDo}
-          boardIndex={this.props.boardIndex}
-        />
-        {this.props.todos.map((todo, index) => {
+        <BoardHeader>
+          <BoardName>{name}</BoardName>
+          <Delete onClick={() => deleteBoard(boardIndex)}>X</Delete>
+        </BoardHeader>
+
+        <AddToDo addToDo={addToDo} boardIndex={boardIndex} />
+
+        {todos.map((todo, index) => {
           return (
             <DragContainer
-              value={todo}
-              boardIndex={this.props.boardIndex}
+              todo={todo}
+              boardIndex={boardIndex}
               index={index}
               key={index}
-              handleDrag={this.props.handleDrag}
-              deleteToDo={this.props.deleteToDo}
-              addBoard={this.props.addBoard}
+              handleDrag={handleDrag}
+              deleteToDo={deleteToDo}
+              addBoard={addBoard}
             />
           );
         })}

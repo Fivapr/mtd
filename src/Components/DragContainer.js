@@ -5,16 +5,20 @@ import DragElement from "./DragElement";
 import styled from "styled-components";
 
 const Container = styled.div`
-  background: red;
-  width: 400px;
-  height: 50px;
-  line-height: 50px;
+  background: #caffde;
+  margin: 20px 0;
+  padding: 14px 7px;
+  border-radius: 4.5px;
+  cursor: grab;
   display: flex;
   justify-content: space-between;
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 6px 6px rgba(0, 0, 0, 0.23);
+  textdecoration: "none";
 `;
 
 const Delete = styled.span`
   cursor: pointer;
+  margin-left: 20px;
 `;
 
 const divTarget = {

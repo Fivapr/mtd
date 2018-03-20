@@ -4,16 +4,32 @@ import AddToDo from "./AddToDo";
 import styled from "styled-components";
 
 const BoardHeader = styled.div`
-  width: 200px;
+  min-width: 200px;
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 `;
 
-const Delete = styled.h2`
+const Delete = styled.h4`
   cursor: pointer;
+  margin-left: 20px;
 `;
 
-const BoardName = styled.h2``;
+const BoardName = styled.h4`
+  color: #333;
+  letter-spacing: 1.66;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 900;
+  margin: 20 0;
+`;
+
+const BoardContainer = styled.div`
+  margin: 20px;
+  padding: 5px 10px;
+  background: white;
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.16), 0 6px 6px rgba(0, 0, 0, 0.23);
+`;
 
 class Board extends Component {
   render() {
@@ -29,7 +45,7 @@ class Board extends Component {
     } = this.props;
 
     return (
-      <div>
+      <BoardContainer>
         <BoardHeader>
           <BoardName>{name}</BoardName>
           <Delete onClick={() => deleteBoard(boardIndex)}>X</Delete>
@@ -50,7 +66,7 @@ class Board extends Component {
             />
           );
         })}
-      </div>
+      </BoardContainer>
     );
   }
 }

@@ -3,9 +3,17 @@ import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import AddBoard from "./AddBoard";
 import Board from "./Board";
+import styled from "styled-components";
 
 // { name: "qwe", todos: ["lala", "qwerty", "ququarequu"] },
 // { name: "rty", todos: ["lolalo", "asdfgh", "ququarequu"] }
+
+const BoardContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`;
+
 class App extends Component {
   constructor() {
     super();
@@ -68,21 +76,23 @@ class App extends Component {
   render() {
     return (
       <div>
-        <AddBoard addBoard={this.addBoard} />
-        {this.state.boards.map((board, index) => {
-          return (
-            <Board
-              boardIndex={index}
-              key={index}
-              name={board.name}
-              todos={board.todos}
-              handleDrag={this.handleDrag}
-              deleteToDo={this.deleteToDo}
-              addToDo={this.addToDo}
-              deleteBoard={this.deleteBoard}
-            />
-          );
-        })}
+        <BoardContainer>
+          {this.state.boards.map((board, index) => {
+            return (
+              <Board
+                boardIndex={index}
+                key={index}
+                name={board.name}
+                todos={board.todos}
+                handleDrag={this.handleDrag}
+                deleteToDo={this.deleteToDo}
+                addToDo={this.addToDo}
+                deleteBoard={this.deleteBoard}
+              />
+            );
+          })}
+          <AddBoard addBoard={this.addBoard} />
+        </BoardContainer>
       </div>
     );
   }

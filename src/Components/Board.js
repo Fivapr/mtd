@@ -17,10 +17,8 @@ const Delete = styled.h4`
 
 const BoardName = styled.h4`
   color: #333;
-  letter-spacing: 1.66;
   text-align: center;
   text-transform: uppercase;
-  font-weight: 900;
   margin: 20 0;
 `;
 

@@ -10,7 +10,7 @@ import styled from "styled-components";
 
 const BoardContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
 `;
 
@@ -38,9 +38,8 @@ class App extends Component {
   }
 
   swap = (arri, arrj, i, j) => {
-    let temp = arri[i];
-    arri[i] = arrj[j];
-    arrj[j] = temp;
+    let temp = arri.splice(i, 1);
+    arrj.splice(j, 0, temp);
   };
 
   handleDrag = (boardIndexFrom, indexFrom, boardIndexTo, indexTo) => {
